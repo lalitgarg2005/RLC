@@ -84,7 +84,7 @@ config.default_broadcast_sockets.forEach(function(url){
     blockController.receiveLatestBlocks(responseData, socket);
   });
   OutgoingSockets.push(socket);
-  console.log("Outgoing : connection with wallet at " + socket.handshake.headers.host + " established !");
+  console.log("Outgoing : Establishing connection with wallet at " + url);
 });
 
 
@@ -151,7 +151,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
   TargetCollection         = mongoConnection.collection(MONGO_COLL_TARGET);
 
   // mongo db started
-  console.log('Mongo DB Started');
+  // console.log('Mongo DB Started');
   setTimeout(function () {          // TODO : Need to handle in a better way (wait till blockchain update complete before proceeding, as blockchain update may take hours/days to update for a big blockchain)
     MongoHandler.updateBlockchain();
     // TODO : Handle Balance and Target Table maintainance effeciently
@@ -194,6 +194,7 @@ setTimeout(function () {
             console.log("User for Miner not Logged in");
         }
         else{
+            console.log("Mining has begun")
             mineBlocks(userData);
         }
     });

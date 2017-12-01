@@ -80,7 +80,7 @@ BroadcastMaster.on('connection', function (socket) {
   socket.on(Constants.SOCKET_GET_LATEST_BLOCK_REPLY, function(responseData){
     blockController.receiveLatestBlocks(responseData, socket);
   });
-  console.log("Incoming : connection with " + socket.handshake.headers.host + " established !");
+  console.log("Incoming : Connection with " + socket.handshake.headers.host + " established !");
   // console.log("io.sockets.connected: ", Object.keys(BroadcastMaster.sockets.connected));
   // console.log("io.engine.clientsCount: ", BroadcastMaster.engine.clientsCount); // Works !
 });
@@ -98,7 +98,7 @@ config.default_broadcast_sockets.forEach(function(url){
     blockController.receiveLatestBlocks(responseData, socket);
   });
   OutgoingSockets.push(socket);
-  console.log("Outgoing : connection with wallet at " + socket.handshake.headers.host + " established !");
+  console.log("Outgoing : Establishing connection with wallet at " + url);
 });
 
 config.miner_broadcast_sockets.forEach(function(url){
@@ -106,7 +106,7 @@ config.miner_broadcast_sockets.forEach(function(url){
   socket.on(Constants.SOCKET_BROADCAST_BLOCK, blockController.acceptBroadcastBlock);
   socket.on(Constants.SOCKET_BROADCAST_TRANSACTION, transactionController.acceptBroadcastTransaction);
   OutgoingSockets.push(socket);
-  console.log("Outgoing : connection with miner at " + socket.handshake.headers.host + " established !");
+  console.log("Outgoing : Establishing connection with miner at " + url);
 });
 
 
