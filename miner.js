@@ -66,7 +66,7 @@ BroadcastMaster.on('connection', function (socket) {
   socket.on(Constants.SOCKET_GET_LATEST_BLOCK_REPLY, function(responseData){
     blockController.receiveLatestBlocks(responseData, socket);
   });
-  console.log("Incoming : connection with " + socket.handshake.headers.host + " established !");
+  console.log("Incoming : Connection with " + socket.handshake.address.split(":")[3] + " established !");
   // console.log("io.sockets.connected: ", Object.keys(BroadcastMaster.sockets.connected));
   // console.log("io.engine.clientsCount: ", BroadcastMaster.engine.clientsCount); // Works !
 });
