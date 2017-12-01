@@ -53,6 +53,8 @@ server.listen(config.miner_io_port);
 var blockController = require("app/controllers/block.server.controller");
 var transactionController = require("app/controllers/transaction.server.controller");
 
+console.log("\n\n\n");
+
 // Assumption : We only connect to trusted nodes
 // TODO : Remove untrusted nodes time-to-time via cron script
 BroadcastMaster.on('connection', function (socket) {
@@ -64,6 +66,7 @@ BroadcastMaster.on('connection', function (socket) {
   socket.on(Constants.SOCKET_GET_LATEST_BLOCK_REPLY, function(responseData){
     blockController.receiveLatestBlocks(responseData, socket);
   });
+  console.log("Incoming : connection with " + socket.handshake.headers.host + " established !");
   // console.log("io.sockets.connected: ", Object.keys(BroadcastMaster.sockets.connected));
   // console.log("io.engine.clientsCount: ", BroadcastMaster.engine.clientsCount); // Works !
 });
@@ -81,6 +84,7 @@ config.default_broadcast_sockets.forEach(function(url){
     blockController.receiveLatestBlocks(responseData, socket);
   });
   OutgoingSockets.push(socket);
+  console.log("Outgoing : connection with wallet at " + socket.handshake.headers.host + " established !");
 });
 
 

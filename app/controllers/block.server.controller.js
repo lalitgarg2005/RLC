@@ -55,7 +55,7 @@ exports.getUserBalance = function(req, res, next){
 var acceptBroadcastBlock = function(block){
     // TODO: Re broadcast ? Will need to handle infinite loop handling
 
-    // console.log("Incoming BroadcastBlock : ", block);
+    console.log("Incoming Broadcast Block : ", JSON.stringify(block, null, 2));
     MongoHandler.getCurrentBlock(function(err, existingBlock){
         if(existingBlock.blockNumber == block.blockNumber - 1){
             MongoHandler.insertNetworkBlock(block, function(err, reply){});

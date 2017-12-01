@@ -67,6 +67,8 @@ server.listen(config.socket_io_port);
 var blockController = require("app/controllers/block.server.controller");
 var transactionController = require("app/controllers/transaction.server.controller");
 
+console.log("\n\n\n");
+
 // Assumption : We only connect to trusted nodes
 // TODO : Remove untrusted nodes time-to-time via cron script
 BroadcastMaster.on('connection', function (socket) {
@@ -78,6 +80,7 @@ BroadcastMaster.on('connection', function (socket) {
   socket.on(Constants.SOCKET_GET_LATEST_BLOCK_REPLY, function(responseData){
     blockController.receiveLatestBlocks(responseData, socket);
   });
+  console.log("Incoming : connection with " + socket.handshake.headers.host + " established !");
   // console.log("io.sockets.connected: ", Object.keys(BroadcastMaster.sockets.connected));
   // console.log("io.engine.clientsCount: ", BroadcastMaster.engine.clientsCount); // Works !
 });
@@ -95,6 +98,7 @@ config.default_broadcast_sockets.forEach(function(url){
     blockController.receiveLatestBlocks(responseData, socket);
   });
   OutgoingSockets.push(socket);
+  console.log("Outgoing : connection with wallet at " + socket.handshake.headers.host + " established !");
 });
 
 config.miner_broadcast_sockets.forEach(function(url){
@@ -102,6 +106,7 @@ config.miner_broadcast_sockets.forEach(function(url){
   socket.on(Constants.SOCKET_BROADCAST_BLOCK, blockController.acceptBroadcastBlock);
   socket.on(Constants.SOCKET_BROADCAST_TRANSACTION, transactionController.acceptBroadcastTransaction);
   OutgoingSockets.push(socket);
+  console.log("Outgoing : connection with miner at " + socket.handshake.headers.host + " established !");
 });
 
 
@@ -179,7 +184,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
   TargetCollection         = mongoConnection.collection(MONGO_COLL_TARGET);
 
   // mongo db started
-  console.log('Mongo DB Started');
+  // console.log('Mongo DB Started');
   setTimeout(function () {          // TODO : Need to handle in a better way (wait till blockchain update complete before proceeding, as blockchain update may take hours/days to update for a big blockchain)
     MongoHandler.updateBlockchain();
   });
