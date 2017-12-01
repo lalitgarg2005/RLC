@@ -158,7 +158,7 @@ exports.receiveLatestBlocks = function(responseData, responseSocket){
     // TODO : Reset Redis update ttl, so that update continues
 
     // TODO : Test : All later balance and difficulty entries should be removed on FORK !
-
+    console.log("Blockchain update Data : ", JSON.stringify(responseData, null, 2));
     async.parallel([
             function(cb){
                 RedisHandler.isBlockchainUpdateInProgress(cb);
